@@ -2,41 +2,82 @@
 #include <string>
 #include <fstream>
 #include <cstdio>
+#include <regex>
 using namespace std;
 
 // Test whether the file is valid by attempting to open it and then closing it once confirmed.
-bool validFile(const string& path) {
-    ifstream cppFile;
+//bool validFile(const string& path) {
+//    ifstream cppFile;
+//
+//    cppFile.open(path);
+//    if(cppFile.is_open()) {
+//        cppFile.close();
+//        return true;
+//    }
+//
+//    return false;
+//}
 
-    cppFile.open(path);
-    if(cppFile.is_open()) {
-        cppFile.close();
+// Test whether the path is valid by creating a dummy file in the provided path
+// then closing and deleting it once confirmed.
+//bool validPath(string path) {
+//    ofstream htmlFile;
+//    string testFile = "test.html";
+//    string::iterator it = path.end();
+//    char lastChar = *(it-1);
+//
+//    if(lastChar != '\\')
+//        path += '\\' + testFile;
+//    else
+//        path += testFile;
+//
+//    htmlFile.open(path);
+//    if(htmlFile.is_open()) {
+//        htmlFile.close();
+//        remove(path.c_str());
+//
+//        return true;
+//    }
+//
+//    return false;
+//}
+
+bool validCppFile(string& path) {
+    regex cppPath(R"([a-zA-Z]:[\\/](?:[a-zA-Z0-9]+[\\/])*([a-zA-Z0-9]+\.cpp))");
+    bool isValid = regex_match(path, cppPath);
+
+    if (isValid)
         return true;
-    }
 
     return false;
 }
 
-// Test whether the path is valid by creating a dummy file in the provided path
-// then closing and deleting it once confirmed.
-bool validPath(string path) {
-    ofstream htmlFile;
-    string testFile = "test.html";
+bool isWindows(string& path) {
+    string pathName = path.substr(path.find_last_of("/\\"));
+    char pathOS = pathName.front();
+
+    if (pathOS == '\\')
+        return true;
+
+    return false;
+}
+
+bool validHtmlPath(string path) {
+    regex htmlPath(R"([a-zA-Z]:[\\\/](?:[a-zA-Z0-9]+[\\\/])*)");
     string::iterator it = path.end();
     char lastChar = *(it-1);
 
-    if(lastChar != '\\')
-        path += '\\' + testFile;
-    else
-        path += testFile;
-
-    htmlFile.open(path);
-    if(htmlFile.is_open()) {
-        htmlFile.close();
-        remove(path.c_str());
-
-        return true;
+    if (lastChar != '\\' && lastChar != '/') {
+        if (isWindows(path))
+            path += '\\';
+        else
+            path += '/';
     }
+
+    bool isValid = regex_match(path, htmlPath);
+
+    if (isValid)
+        return true;
 
     return false;
 }
@@ -48,20 +89,20 @@ int main(int argc, char **argv) {
     string cppPath, htmlPath;
 
     // Check number of arguments.
-    if(argc != 3 && argc != 5) {
+    if (argc != 3 && argc != 5) {
         cout << R"(Invalid number of arguments, Example: -cpp C:\File.cpp and/or -html C:\Program Files)" << endl;
         return 1;
     }
 
     // If number of arguments equal 3 then only cpp file is provided and write html file to same path.
-    if(argc == 3) {
+    if (argc == 3) {
         fileArgOne = argv[1];
         remove(fileArgTwo.c_str());
 
-        if(fileArgOne == "-cpp") {
+        if (fileArgOne == "-cpp") {
             cppPath = argv[2];
-            if (!validFile(cppPath)) {
-                cout << R"(Invalid file, cpp file doesn't exist or doesn't have read permissions)" << endl;
+            if (!validCppFile(cppPath)) {
+                cout << R"(Invalid path, cpp file path doesn't exist)" << endl;
                 return 1;
             }
         }
@@ -76,16 +117,16 @@ int main(int argc, char **argv) {
         fileArgOne = argv[1];
         fileArgTwo = argv[3];
 
-        if(fileArgOne == "-cpp") {
+        if (fileArgOne == "-cpp") {
             cppPath = argv[2];
-            if (!validFile(cppPath)) {
-                cout << R"(Invalid file, cpp file doesn't exist or doesn't have read permissions)" << endl;
+            if (!validCppFile(cppPath)) {
+                cout << R"(Invalid path, cpp file path doesn't exist)" << endl;
                 return 1;
             }
         }
-        else if(fileArgOne == "-html") {
+        else if (fileArgOne == "-html") {
             htmlPath = argv[2];
-            if (!validPath(htmlPath)) {
+            if (!validHtmlPath(htmlPath)) {
                 cout << R"(Invalid path, html path doesn't exist or doesn't have write permissions)" << endl;
                 return 1;
             }
@@ -95,17 +136,17 @@ int main(int argc, char **argv) {
             return 1;
         }
 
-        if(fileArgTwo == "-cpp") {
+        if (fileArgTwo == "-cpp") {
             cppPath = argv[4];
-            if (!validFile(cppPath)) {
-                cout << R"(Invalid file, cpp file doesn't exist or doesn't have read permissions)" << endl;
+            if (!validCppFile(cppPath)) {
+                cout << R"(Invalid path, cpp file path doesn't exist)" << endl;
                 return 1;
             }
         }
-        else if(fileArgTwo == "-html") {
+        else if (fileArgTwo == "-html") {
             htmlPath = argv[4];
-            if (!validPath(htmlPath)) {
-                cout << R"(Invalid path, html path doesn't exist or doesn't have write permissions)" << endl;
+            if (!validHtmlPath(htmlPath)) {
+                cout << R"(Invalid path, path doesn't exist)" << endl;
                 return 1;
             }
         }
@@ -137,30 +178,35 @@ int main(int argc, char **argv) {
     // Extract text from cpp file and store it.
     string line;
 
+
     cppFile.open(cppPath);
 
-    while(getline(cppFile, line))
+    while (getline(cppFile, line))
         cppText += line + "\n";
 
     cppFile.close();
 
     // Process every character and convert each symbol.
-    for(char i : cppText) {
+    for (char i : cppText) {
         string fileChar = string(1,i);
 
-        if(fileChar == lChevron)
+        if (fileChar == lChevron)
             fileChar = lChevronSymbol;
-        else if(fileChar == rChevron)
+        else if (fileChar == rChevron)
             fileChar = rChevronSymbol;
 
         htmlText += fileChar;
     }
 
     // Create html file and write all data to it.
-    if(htmlPath.empty())
-        htmlPath = rawPath + '\\' + rawName + ".html";
+    if (htmlPath.empty()) {
+        if (isWindows(cppPath))
+            htmlPath = rawPath + '\\' + rawName + ".html";
+        else
+            htmlPath = rawPath + '/' + rawName + ".html";
+    }
     else {
-        if(lastChar != '\\')
+        if(isWindows(htmlPath) && lastChar != '\\')
             htmlPath += '\\' + rawName + ".html";
         else
             htmlPath += rawName + ".html";
@@ -168,7 +214,7 @@ int main(int argc, char **argv) {
 
     htmlFile.open(htmlPath);
 
-    if(htmlFile.is_open()) {
+    if (htmlFile.is_open()) {
         htmlFile << "<PRE>" << endl;
         htmlFile << htmlText;
         htmlFile << "</PRE>";
