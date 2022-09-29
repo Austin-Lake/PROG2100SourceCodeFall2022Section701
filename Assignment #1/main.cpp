@@ -5,43 +5,7 @@
 #include <regex>
 using namespace std;
 
-// Test whether the file is valid by attempting to open it and then closing it once confirmed.
-//bool validFile(const string& path) {
-//    ifstream cppFile;
-//
-//    cppFile.open(path);
-//    if(cppFile.is_open()) {
-//        cppFile.close();
-//        return true;
-//    }
-//
-//    return false;
-//}
-
-// Test whether the path is valid by creating a dummy file in the provided path
-// then closing and deleting it once confirmed.
-//bool validPath(string path) {
-//    ofstream htmlFile;
-//    string testFile = "test.html";
-//    string::iterator it = path.end();
-//    char lastChar = *(it-1);
-//
-//    if(lastChar != '\\')
-//        path += '\\' + testFile;
-//    else
-//        path += testFile;
-//
-//    htmlFile.open(path);
-//    if(htmlFile.is_open()) {
-//        htmlFile.close();
-//        remove(path.c_str());
-//
-//        return true;
-//    }
-//
-//    return false;
-//}
-
+// Validate whether cpp file path is a valid path for Windows & Unix.
 bool validCppFile(string& path) {
     regex cppPath(R"([a-zA-Z]:[\\/](?:[a-zA-Z0-9]+[\\/])*([a-zA-Z0-9]+\.cpp))");
     bool isValid = regex_match(path, cppPath);
@@ -52,6 +16,7 @@ bool validCppFile(string& path) {
     return false;
 }
 
+// Checks whether path is a Windows or Unix path based on back or forward slash.
 bool isWindows(string& path) {
     string pathName = path.substr(path.find_last_of("/\\"));
     char pathOS = pathName.front();
@@ -62,6 +27,7 @@ bool isWindows(string& path) {
     return false;
 }
 
+// Validate whether html path is a valid path for Windows & Unix.
 bool validHtmlPath(string path) {
     regex htmlPath(R"([a-zA-Z]:[\\\/](?:[a-zA-Z0-9]+[\\\/])*)");
     string::iterator it = path.end();
@@ -90,7 +56,8 @@ int main(int argc, char **argv) {
 
     // Check number of arguments.
     if (argc != 3 && argc != 5) {
-        cout << R"(Invalid number of arguments, Example: -cpp C:\File.cpp and/or -html C:\Program Files)" << endl;
+        cout << R"(Invalid number of arguments, Example: -cpp C:\File.cpp and/or -html C:\Program Files or
+                    -cpp C:/File.cpp and/or -html C:/Program Files)" << endl;
         return 1;
     }
 
@@ -102,12 +69,12 @@ int main(int argc, char **argv) {
         if (fileArgOne == "-cpp") {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
-                cout << R"(Invalid path, cpp file path doesn't exist)" << endl;
+                cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
         else {
-            cout << R"(Invalid argument, Example: -cpp C:\File.cpp)" << endl;
+            cout << R"(Invalid argument, Example: -cpp C:\File.cpp or -cpp C:/File.cpp)" << endl;
             return 1;
         }
     }
@@ -120,38 +87,40 @@ int main(int argc, char **argv) {
         if (fileArgOne == "-cpp") {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
-                cout << R"(Invalid path, cpp file path doesn't exist)" << endl;
+                cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
         else if (fileArgOne == "-html") {
             htmlPath = argv[2];
             if (!validHtmlPath(htmlPath)) {
-                cout << R"(Invalid path, html path doesn't exist or doesn't have write permissions)" << endl;
+                cout << R"(Invalid path, html path doesn't exist, Example: C:\Program Files or C:/Program Files)" << endl;
                 return 1;
             }
         }
         else {
-            cout << R"(Invalid arguments, Example: -cpp C:\File.cpp -html C:\Program Files)" << endl;
+            cout << R"(Invalid arguments, Example: -cpp C:\File.cpp -html C:\Program Files or
+                        -cpp C:/File.cpp -html C:/Program Files)" << endl;
             return 1;
         }
 
         if (fileArgTwo == "-cpp") {
             cppPath = argv[4];
             if (!validCppFile(cppPath)) {
-                cout << R"(Invalid path, cpp file path doesn't exist)" << endl;
+                cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
         else if (fileArgTwo == "-html") {
             htmlPath = argv[4];
             if (!validHtmlPath(htmlPath)) {
-                cout << R"(Invalid path, path doesn't exist)" << endl;
+                cout << R"(Invalid path, html path doesn't exist, Example: C:\Program Files or C:/Program Files)" << endl;
                 return 1;
             }
         }
         else {
-            cout << R"(Invalid arguments, Example: -cpp C:\File.cpp -html C:\Program Files)" << endl;
+            cout << R"(Invalid arguments, Example: -cpp C:\File.cpp -html C:\Program Files or
+                        -cpp C:/File.cpp -html C:/Program Files)" << endl;
             return 1;
         }
     }
@@ -178,13 +147,19 @@ int main(int argc, char **argv) {
     // Extract text from cpp file and store it.
     string line;
 
-
     cppFile.open(cppPath);
 
-    while (getline(cppFile, line))
-        cppText += line + "\n";
+    if (cppFile.is_open()) {
+        while (getline(cppFile, line))
+            cppText += line + "\n";
 
-    cppFile.close();
+        cppFile.close();
+    }
+    else {
+        cout << "Cpp file can't be opened, make sure file name in path is correct.";
+        return 1;
+    }
+
 
     // Process every character and convert each symbol.
     for (char i : cppText) {
@@ -206,10 +181,18 @@ int main(int argc, char **argv) {
             htmlPath = rawPath + '/' + rawName + ".html";
     }
     else {
-        if(isWindows(htmlPath) && lastChar != '\\')
-            htmlPath += '\\' + rawName + ".html";
-        else
-            htmlPath += rawName + ".html";
+        if (isWindows(htmlPath)) {
+            if (lastChar != '\\')
+                htmlPath += '\\' + rawName + ".html";
+            else
+                htmlPath += rawName + ".html";
+        }
+        else {
+            if (lastChar != '/')
+                htmlPath += '/' + rawName + ".html";
+            else
+                htmlPath += rawName + ".html";
+        }
     }
 
     htmlFile.open(htmlPath);
