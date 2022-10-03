@@ -53,6 +53,8 @@ int main(int argc, char **argv) {
     // Argument and path variables.
     string fileArgOne, fileArgTwo;
     string cppPath, htmlPath;
+    string cppArgument = "-cpp";
+    string htmlArgument = "-html";
 
     // Check number of arguments.
     if (argc != 3 && argc != 5) {
@@ -66,7 +68,7 @@ int main(int argc, char **argv) {
         fileArgOne = argv[1];
         remove(fileArgTwo.c_str());
 
-        if (fileArgOne == "-cpp") {
+        if (fileArgOne == cppArgument) {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
                 cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
@@ -84,14 +86,14 @@ int main(int argc, char **argv) {
         fileArgOne = argv[1];
         fileArgTwo = argv[3];
 
-        if (fileArgOne == "-cpp") {
+        if (fileArgOne == cppArgument) {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
                 cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
-        else if (fileArgOne == "-html") {
+        else if (fileArgOne == htmlArgument) {
             htmlPath = argv[2];
             if (!validHtmlPath(htmlPath)) {
                 cout << R"(Invalid path, html path doesn't exist, Example: C:\Program Files or C:/Program Files)" << endl;
@@ -104,14 +106,14 @@ int main(int argc, char **argv) {
             return 1;
         }
 
-        if (fileArgTwo == "-cpp") {
+        if (fileArgTwo == cppArgument) {
             cppPath = argv[4];
             if (!validCppFile(cppPath)) {
                 cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
-        else if (fileArgTwo == "-html") {
+        else if (fileArgTwo == htmlArgument) {
             htmlPath = argv[4];
             if (!validHtmlPath(htmlPath)) {
                 cout << R"(Invalid path, html path doesn't exist, Example: C:\Program Files or C:/Program Files)" << endl;
@@ -182,24 +184,26 @@ int main(int argc, char **argv) {
     }
 
     // Create html file and write all data to it.
+    string htmlExtension = ".html";
+
     if (htmlPath.empty()) {
         if (isWindows(cppPath))
-            htmlPath = rawPath + '\\' + rawName + ".html";
+            htmlPath = rawPath + '\\' + rawName + htmlExtension;
         else
-            htmlPath = rawPath + '/' + rawName + ".html";
+            htmlPath = rawPath + '/' + rawName + htmlExtension;
     }
     else {
         if (isWindows(htmlPath)) {
             if (lastChar != '\\')
-                htmlPath += '\\' + rawName + ".html";
+                htmlPath += '\\' + rawName + htmlExtension;
             else
-                htmlPath += rawName + ".html";
+                htmlPath += rawName + htmlExtension;
         }
         else {
             if (lastChar != '/')
-                htmlPath += '/' + rawName + ".html";
+                htmlPath += '/' + rawName + htmlExtension;
             else
-                htmlPath += rawName + ".html";
+                htmlPath += rawName + htmlExtension;
         }
     }
 
