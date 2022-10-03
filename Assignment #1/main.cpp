@@ -145,17 +145,25 @@ int main(int argc, char **argv) {
     string rawName = cppFileName.substr(0, lastIndex);
 
     // Extract text from cpp file and store it.
-    string line;
+    try
+    {
+        string line;
 
-    cppFile.open(cppPath);
+        cppFile.open(cppPath);
 
-    if (cppFile.is_open()) {
-        while (getline(cppFile, line))
-            cppText += line + "\n";
+        if (cppFile.is_open()) {
+            while (getline(cppFile, line))
+                cppText += line + "\n";
 
-        cppFile.close();
+            cppFile.close();
+        }
+        else
+        {
+            throw;
+        }
     }
-    else {
+    catch (...)
+    {
         cout << "Cpp file can't be opened, make sure file name in path is correct.";
         return 1;
     }
@@ -195,13 +203,25 @@ int main(int argc, char **argv) {
         }
     }
 
-    htmlFile.open(htmlPath);
+    try
+    {
+        htmlFile.open(htmlPath);
 
-    if (htmlFile.is_open()) {
-        htmlFile << "<PRE>" << endl;
-        htmlFile << htmlText;
-        htmlFile << "</PRE>";
-        htmlFile.close();
+        if (htmlFile.is_open()) {
+            htmlFile << "<PRE>" << endl;
+            htmlFile << htmlText;
+            htmlFile << "</PRE>";
+            htmlFile.close();
+        }
+        else
+        {
+            throw;
+        }
+    }
+    catch (...)
+    {
+        cout << "Html file can't be created and written to, make sure path is correct.";
+        return 1;
     }
 
     return 0;
