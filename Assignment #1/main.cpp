@@ -99,8 +99,7 @@ public:
 int main(int argc, char **argv) {
     // Check number of arguments.
     if (argc != 3 && argc != 5) {
-        cout << "Invalid number of arguments.\n" R"( Windows: -cpp C:\File.cpp or -html C:/File.cpp -cpp C:/Program Files or 
-        Unix: -cpp /File.cpp or -html /home -cpp /File.cpp)" << endl;
+        cout << "Invalid number of arguments.\n" R"( Windows: -cpp "C:\File.cpp" or -html "C:/File.cpp" -cpp "C:/Program Files" / Unix: -cpp "/File.cpp" or -html "/home" -cpp "/File.cpp")" << endl;
         return 1;
     }
 
@@ -118,12 +117,12 @@ int main(int argc, char **argv) {
         if (fileArgOne == cppArgument) {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
-                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Windows: C:\File.cpp or Unix: /File.cpp)" << endl;
+                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Windows: "C:\File.cpp" / Unix: "/File.cpp")" << endl;
                 return 1;
             }
         }
         else {
-            cout << "Invalid argument: '" + fileArgOne + "'\n" R"( Windows: -cpp C:\File.cpp or Unix: -cpp /File.cpp)" << endl;
+            cout << "Invalid argument: '" + fileArgOne + "'\n" R"( Windows: -cpp "C:\File.cpp" / Unix: -cpp "/File.cpp")" << endl;
             return 1;
         }
     }
@@ -136,38 +135,38 @@ int main(int argc, char **argv) {
         if (fileArgOne == cppArgument) {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
-                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Windows: C:\File.cpp or Unix: /File.cpp)" << endl;
+                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Windows: "C:\File.cpp" / Unix: "/File.cpp")" << endl;
                 return 1;
             }
         }
         else if (fileArgOne == htmlArgument) {
             htmlPath = argv[2];
             if (!validHtmlPath(htmlPath)) {
-                cout << "Invalid path: '" + htmlPath + "', html path doesn't exist.\n" R"( Windows: C:\Program Files or Unix: /home)" << endl;
+                cout << "Invalid path: '" + htmlPath + "', html path doesn't exist.\n" R"( Windows: "C:\Program Files" / Unix: "/home")" << endl;
                 return 1;
             }
         }
         else {
-            cout << "Invalid argument: '" + fileArgOne + "'\n" R"( Windows: -cpp C:\File.cpp -html C:\Program Files or Unix: -html /home -cpp /File.cpp)" << endl;
+            cout << "Invalid argument: '" + fileArgOne + "'\n" R"( Windows: -cpp "C:\File.cpp" -html "C:\Program Files" / Unix: -html "/home" -cpp "/File.cpp")" << endl;
             return 1;
         }
 
         if (fileArgTwo == cppArgument) {
             cppPath = argv[4];
             if (!validCppFile(cppPath)) {
-                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Windows: C:\File.cpp or Unix: /File.cpp)" << endl;
+                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Windows: "C:\File.cpp" / Unix: "/File.cpp")" << endl;
                 return 1;
             }
         }
         else if (fileArgTwo == htmlArgument) {
             htmlPath = argv[4];
             if (!validHtmlPath(htmlPath)) {
-                cout << "Invalid path: '" + htmlPath + "', html path doesn't exist.\n" R"( Windows: C:\Program Files or Unix: /home)" << endl;
+                cout << "Invalid path: '" + htmlPath + "', html path doesn't exist.\n" R"( Windows: "C:\Program Files" / Unix: "/home")" << endl;
                 return 1;
             }
         }
         else {
-            cout << "Invalid argument: '" + fileArgTwo + "'\n" R"( Windows: -cpp C:\File.cpp -html C:\Program Files or Unix: -html /home -cpp /File.cpp)" << endl;
+            cout << "Invalid argument: '" + fileArgTwo + "'\n" R"( Windows: -cpp "C:\File.cpp" -html "C:\Program Files" / Unix: -html "/home" -cpp "/File.cpp")" << endl;
             return 1;
         }
     }
