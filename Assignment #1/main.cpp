@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstdio>
 #include <regex>
+#include <utility>
 using namespace std;
 
 // Validate whether cpp file path is a valid path for Windows & Unix.
@@ -48,40 +49,69 @@ bool validHtmlPath(string path) {
     return false;
 }
 
+// Process every character and convert each symbol.
+string replaceTags(string& text) {
+    string convertedText;
+    string lChevron = "<", rChevron = ">";
+    string lChevronSymbol = "&lt", rChevronSymbol = "&gt";
+
+    for (char i : text) {
+        string fileChar = string(1,i);
+
+        if (fileChar == lChevron)
+            fileChar = lChevronSymbol;
+        else if (fileChar == rChevron)
+            fileChar = rChevronSymbol;
+
+        convertedText += fileChar;
+    }
+
+    return convertedText;
+}
+
+struct MyCustomException : public exception {
+private:
+    const string message;
+
+public:
+    explicit MyCustomException(string msg) : message(std::move(msg)) {}
+    string what() {
+        return message;
+    }
+};
+
 int main(int argc, char **argv) {
+    // Check number of arguments.
+    if (argc != 3 && argc != 5) {
+        cout << "Invalid number of arguments.\n" R"( Example: -cpp C:\File.cpp or -html C:/File.cpp -cpp C:/Program Files)" << endl;
+        return 1;
+    }
 
     // Argument and path variables.
     string fileArgOne, fileArgTwo;
     string cppPath, htmlPath;
-    string cppArgument = "-cpp";
-    string htmlArgument = "-html";
-
-    // Check number of arguments.
-    if (argc != 3 && argc != 5) {
-        cout << R"(Invalid number of arguments, Example: -cpp C:\File.cpp and/or -html C:\Program Files or
-                    -cpp C:/File.cpp and/or -html C:/Program Files)" << endl;
-        return 1;
-    }
+    string cppArgument = "-cpp", htmlArgument = "-html";
 
     // If number of arguments equal 3 then only cpp file is provided and write html file to same path.
     if (argc == 3) {
         fileArgOne = argv[1];
         remove(fileArgTwo.c_str());
+        remove(htmlArgument.c_str());
 
         if (fileArgOne == cppArgument) {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
-                cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
+                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
         else {
-            cout << R"(Invalid argument, Example: -cpp C:\File.cpp or -cpp C:/File.cpp)" << endl;
+            cout << "Invalid argument: " + fileArgOne + R"( Example: -cpp C:\File.cpp or -cpp C:/File.cpp)" << endl;
             return 1;
         }
     }
     // If arguments equal 5 then cpp and html both provided,
-    // read from cpp path and write to html path regardless of order arguments are provided.
+    // reads from cpp path and writes to html path regardless of order arguments are provided.
     else {
         fileArgOne = argv[1];
         fileArgTwo = argv[3];
@@ -89,40 +119,38 @@ int main(int argc, char **argv) {
         if (fileArgOne == cppArgument) {
             cppPath = argv[2];
             if (!validCppFile(cppPath)) {
-                cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
+                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
         else if (fileArgOne == htmlArgument) {
             htmlPath = argv[2];
             if (!validHtmlPath(htmlPath)) {
-                cout << R"(Invalid path, html path doesn't exist, Example: C:\Program Files or C:/Program Files)" << endl;
+                cout << "Invalid path: '" + htmlPath + "', html path doesn't exist.\n" R"( Example: C:\Program Files or C:/Program Files)" << endl;
                 return 1;
             }
         }
         else {
-            cout << R"(Invalid arguments, Example: -cpp C:\File.cpp -html C:\Program Files or
-                        -cpp C:/File.cpp -html C:/Program Files)" << endl;
+            cout << "Invalid argument: " + fileArgOne + "\n" R"( Example: -cpp C:\File.cpp -html C:\Program Files or -html C:/Program Files -cpp C:/File.cpp)" << endl;
             return 1;
         }
 
         if (fileArgTwo == cppArgument) {
             cppPath = argv[4];
             if (!validCppFile(cppPath)) {
-                cout << R"(Invalid path, cpp file path doesn't exist, Example: C:\File.cpp or C:/File.cpp)" << endl;
+                cout << "Invalid path: '" + cppPath + "', cpp file doesn't exist.\n" R"( Example: C:\File.cpp or C:/File.cpp)" << endl;
                 return 1;
             }
         }
         else if (fileArgTwo == htmlArgument) {
             htmlPath = argv[4];
             if (!validHtmlPath(htmlPath)) {
-                cout << R"(Invalid path, html path doesn't exist, Example: C:\Program Files or C:/Program Files)" << endl;
+                cout << "Invalid path: '" + htmlPath + "', html path doesn't exist.\n" R"( Example: C:\Program Files or C:/Program Files)" << endl;
                 return 1;
             }
         }
         else {
-            cout << R"(Invalid arguments, Example: -cpp C:\File.cpp -html C:\Program Files or
-                        -cpp C:/File.cpp -html C:/Program Files)" << endl;
+            cout << "Invalid argument: " + fileArgTwo + "\n" R"( Example: -cpp C:\File.cpp -html C:\Program Files or -html C:/Program Files -cpp C:/File.cpp)" << endl;
             return 1;
         }
     }
@@ -132,13 +160,9 @@ int main(int argc, char **argv) {
     ofstream htmlFile;
     string cppText, htmlText;
 
-    // Get last character in html path to check for additional backslash.
+    // Get last character in html path to check for additional back/forward slash.
     string::iterator it = htmlPath.end();
     char lastChar = *(it-1);
-
-    // Symbols to convert.
-    string lChevron = "<", rChevron = ">";
-    string lChevronSymbol = "&lt", rChevronSymbol = "&gt";
 
     // Get all raw paths and file names.
     string rawPath = cppPath.substr(0, cppPath.find_last_of("\\/"));
@@ -147,10 +171,8 @@ int main(int argc, char **argv) {
     string rawName = cppFileName.substr(0, lastIndex);
 
     // Extract text from cpp file and store it.
-    try
-    {
+    try {
         string line;
-
         cppFile.open(cppPath);
 
         if (cppFile.is_open()) {
@@ -159,29 +181,25 @@ int main(int argc, char **argv) {
 
             cppFile.close();
         }
-        else
-        {
-            throw;
+        else {
+            throw MyCustomException("Cpp file can't be opened. Make sure the file has read permissions.");
         }
     }
-    catch (...)
-    {
-        cout << "Cpp file can't be opened, make sure file name in path is correct.";
+    catch (const bad_exception& message) {
+        cout << message.what() << endl;
+        return 1;
+    }
+    catch (MyCustomException& message) {
+        cout << message.what() << endl;
+        return 1;
+    }
+    catch (...) {
+        cout << "Unknown error. Retry program..." << endl;
         return 1;
     }
 
-
-    // Process every character and convert each symbol.
-    for (char i : cppText) {
-        string fileChar = string(1,i);
-
-        if (fileChar == lChevron)
-            fileChar = lChevronSymbol;
-        else if (fileChar == rChevron)
-            fileChar = rChevronSymbol;
-
-        htmlText += fileChar;
-    }
+    // Converts all symbols from one string and stores it into another.
+    htmlText = replaceTags(cppText);
 
     // Create html file and write all data to it.
     string htmlExtension = ".html";
@@ -207,24 +225,29 @@ int main(int argc, char **argv) {
         }
     }
 
-    try
-    {
+    try {
         htmlFile.open(htmlPath);
 
-        if (htmlFile.is_open()) {
+        if (!htmlFile.fail()) {
             htmlFile << "<PRE>" << endl;
             htmlFile << htmlText;
             htmlFile << "</PRE>";
             htmlFile.close();
         }
-        else
-        {
-            throw;
+        else {
+            throw MyCustomException("Html path can't be created and written to. Make sure the path has write permissions.");
         }
     }
-    catch (...)
-    {
-        cout << "Html file can't be created and written to, make sure path is correct.";
+    catch (const bad_exception& message) {
+        cout << message.what() << endl;
+        return 1;
+    }
+    catch (MyCustomException& message) {
+        cout << message.what() << endl;
+        return 1;
+    }
+    catch (...) {
+        cout << "Unknown error. Retry program..." << endl;
         return 1;
     }
 
