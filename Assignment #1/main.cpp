@@ -251,7 +251,7 @@ int main(int argc, char **argv) {
             htmlFile.close();
         }
         else {
-            throw MyCustomException("Html path can't be created and written to. Make sure the path has write permissions.");
+            throw MyCustomException("Html file can't be created and written to. Make sure the path has write permissions.");
         }
     }
     catch (const bad_exception& message) {
