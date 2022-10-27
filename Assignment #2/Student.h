@@ -5,17 +5,17 @@
 #include <iostream>
 using namespace std;
 
-#ifndef ASSIGNMENT__2_STUDENTCOURSE_H
-#define ASSIGNMENT__2_STUDENTCOURSE_H
+#ifndef ASSIGNMENT__2_STUDENT_H
+#define ASSIGNMENT__2_STUDENT_H
 
-class StudentCourse {
+class Student {
 
 private:
     string studentName;
     string *courseList = new string;
 public:
-    StudentCourse() = default;
-    ~StudentCourse() = default;
+    Student() = default;
+    ~Student() = default;
 
     void AddName(string &name);
 
@@ -24,6 +24,8 @@ public:
     void PrintInformation();
 };
 
-#endif //ASSIGNMENT__2_STUDENTCOURSE_H
+//StudentCourse resizeArray(StudentCourse *studentArray, int size);
+
+#endif //ASSIGNMENT__2_STUDENT_H
 
 
