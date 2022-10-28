@@ -25,6 +25,8 @@ int main() {
             cout << "Enter course: " << endl;
             cin >> course;
 
+            student.AddCourse(course);
+
             cout << "Add another course? y/n: " << endl;
             cin >> addCourse;
 
@@ -33,9 +35,9 @@ int main() {
             else
                 anotherCourse = false;
 
-            student.AddCourse(course);
+            cout << "Finished loop" << endl;
         }
-
+        cout << i << endl;
         if (i >= size) {
             size++;
 

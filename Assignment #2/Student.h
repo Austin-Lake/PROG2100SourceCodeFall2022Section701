@@ -12,7 +12,9 @@ class Student {
 
 private:
     string studentName;
-    string *courseList = new string;
+    int size = 2;
+    int i = 0;
+    string *courseList = new string[size];
 public:
     Student() = default;
     ~Student() = default;
@@ -20,6 +22,8 @@ public:
     void AddName(string &name);
 
     void AddCourse(string &course);
+
+   // void ResetCourses();
 
     void PrintInformation();
 };

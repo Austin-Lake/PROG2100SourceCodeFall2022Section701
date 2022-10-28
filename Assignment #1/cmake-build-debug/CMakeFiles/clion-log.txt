@@ -1,4 +1,4 @@
-C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S "C:\Austin-Lake\PROG2100SourceCodeFall2022Section701\Assignment #1" -B "C:\Austin-Lake\PROG2100SourceCodeFall2022Section701\Assignment #1\cmake-build-debug"
+C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S "C:\Users\Austi\CLionProjects\PROG2100SourceCodeFall2022Section701\Assignment #1" -B "C:\Users\Austi\CLionProjects\PROG2100SourceCodeFall2022Section701\Assignment #1\cmake-build-debug"
 -- The C compiler identification is GNU 11.2.0
 -- The CXX compiler identification is GNU 11.2.0
 -- Detecting C compiler ABI info
@@ -13,4 +13,4 @@ C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\c
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Austin-Lake/PROG2100SourceCodeFall2022Section701/Assignment #1/cmake-build-debug
+-- Build files have been written to: C:/Users/Austi/CLionProjects/PROG2100SourceCodeFall2022Section701/Assignment #1/cmake-build-debug

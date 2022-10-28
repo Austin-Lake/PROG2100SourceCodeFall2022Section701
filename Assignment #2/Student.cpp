@@ -8,17 +8,30 @@
 using namespace std;
 
 void Student::AddName(string &name) {
-    this->studentName = name;
+    studentName = name;
 }
 
 void Student::AddCourse(string &course) {
-    this->courseList->append(course);
+    if (i >= size) {
+        size *= 2;
+        auto *temp = new string[size];
+
+        for (int j = 0; j < i; j++) {
+            temp[j] = courseList[j];
+        }
+
+        delete []courseList;
+
+        courseList = temp;
+    }
+    courseList[i] = course;
+    i++;
 }
 
 void Student::PrintInformation() {
-    cout << studentName << endl;
+    cout << "Student: " << studentName << endl;
 
-    for (int i = 0; i < sizeof(*courseList)/sizeof(courseList[0]); i++) {
-        cout << "Course " << "#" << i << ":" << courseList[i] << endl;
+    for (int j = 0; j < i; j++) {
+        cout << "   Course " << "#" << j+1 << ": " << courseList[j] << endl;
     }
 }
