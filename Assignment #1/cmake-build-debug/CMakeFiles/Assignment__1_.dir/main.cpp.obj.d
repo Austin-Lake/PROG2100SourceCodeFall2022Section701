@@ -1,5 +1,5 @@
 CMakeFiles/Assignment__1_.dir/main.cpp.obj: \
- C:\Users\Austi\CLionProjects\PROG2100SourceCodeFall2022Section701\Assignment\ \#1\main.cpp \
+ C:\Austin-Lake\PROG2100SourceCodeFall2022Section701\Assignment\ \#1\main.cpp \
  C:/Users/Austi/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/iostream \
  C:/Users/Austi/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
  C:/Users/Austi/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \

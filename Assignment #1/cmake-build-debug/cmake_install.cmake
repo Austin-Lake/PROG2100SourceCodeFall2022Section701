@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Austi/CLionProjects/PROG2100SourceCodeFall2022Section701/Assignment #1
+# Install script for directory: C:/Austin-Lake/PROG2100SourceCodeFall2022Section701/Assignment #1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Austi/CLionProjects/PROG2100SourceCodeFall2022Section701/Assignment #1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Austin-Lake/PROG2100SourceCodeFall2022Section701/Assignment #1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
