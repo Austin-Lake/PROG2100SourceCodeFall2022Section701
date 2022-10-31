@@ -3,20 +3,18 @@
 using namespace std;
 
 int main() {
-    string name;
-    int size = 3;
-    int i = 0;
-    bool anotherCourse = true;
-    bool anotherStudent = true;
-    auto *students = new Student[size];
 
-    while (anotherStudent) {
-        Student student;
+    while(true) {
+        string name;
+        int courseSize = 2;
+        bool anotherCourse = true;
+
+        Student studentOne;
 
         cout << "Enter student name: " << endl;
         cin >> name;
 
-        student.AddName(name);
+        studentOne.SetName(name);
 
         while (anotherCourse) {
             string course;
@@ -25,7 +23,7 @@ int main() {
             cout << "Enter course: " << endl;
             cin >> course;
 
-            student.AddCourse(course);
+            studentOne.AddCourse(course, courseSize);
 
             cout << "Add another course? y/n: " << endl;
             cin >> addCourse;
@@ -34,42 +32,29 @@ int main() {
                 anotherCourse = true;
             else
                 anotherCourse = false;
-
-            cout << "Finished loop" << endl;
-        }
-        cout << i << endl;
-        if (i >= size) {
-            size++;
-
-            auto *temp = new Student[size];
-
-            for (int j = 0; j <= i; j++) {
-                temp[i] = students[i];
-            }
-
-            delete []students;
-
-            students = temp;
         }
 
-        students[i] = student;
+        studentOne.PrintInformation();
 
-        string addStudent;
-        cout << "Add another student? y/n: " << endl;
-        cin >> addStudent;
+        cout << "Enter Second Student's Name: " << endl;
+        cin >> name;
 
-        if (addStudent == "y")
-            anotherStudent = true;
-        else
-            anotherStudent = false;
+        Student studentTwo(studentOne);
+        studentTwo.SetName(name);
 
-        anotherCourse = true;
-        i++;
-    }
+        studentOne.ResetCourseList();
 
-    for (int j = 0; j <= i; j++)
-    {
-        students[j].PrintInformation();
+        studentTwo.PrintInformation();
+
+        studentOne.PrintInformation();
+
+        cout << "Enter Third Student's Name: " << endl;
+        cin >> name;
+
+        Student studentThree;
+        studentThree.SetName(name);
+        studentThree = studentTwo;
+        studentThree.PrintInformation();
     }
 
     return 0;

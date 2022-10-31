@@ -12,23 +12,46 @@ class Student {
 
 private:
     string studentName;
-    int size = 2;
-    int i = 0;
-    string *courseList = new string[size];
+    int numCourses = 0;
+    string *courseList = new string[2];
 public:
-    Student() = default;
-    ~Student() = default;
+    Student();
+    Student(const Student &student);
+    ~Student();
 
-    void AddName(string &name);
+//    Student &operator+ (Student &student) {
+//        cout << "Assignment Operator Fired!" << endl;
+//        int count = this->numCourses;
+//        student.courseList = new string[count];
+//
+//        for (int i = 0; i < count; i++) {
+//            student.courseList[i] = this->courseList[i];
+//        }
+//
+//        return student;
+//    }
+    Student &operator=(const Student &student) {
+        cout << "Assignment Operator Fired!" << endl;
+        delete []this->courseList;
+        this->courseList = new string[student.numCourses];
+        this->numCourses = student.numCourses;
 
-    void AddCourse(string &course);
+        for (int i = 0; i < student.numCourses; i++) {
+            this->courseList[i] = student.courseList[i];
+        }
+        cout << "\n\n";
+        return *this;
+    }
 
-   // void ResetCourses();
+    void SetName(string &name);
+
+    void AddCourse(string &course, int &size);
+
+    void ResetCourseList();
 
     void PrintInformation();
 };
 
-//StudentCourse resizeArray(StudentCourse *studentArray, int size);
 
 #endif //ASSIGNMENT__2_STUDENT_H
 
