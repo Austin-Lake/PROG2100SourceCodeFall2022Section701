@@ -6,14 +6,17 @@
 #include <string>
 #include <iostream>
 using namespace std;
+// Student Class Implementations
 
+// Default Constructor
 Student::Student() {
 
 }
-// Copy Constructor to hard copy
+// Copy Constructor to hard copy course list from one student object to another
 Student::Student(const Student &student) {
     cout << "Copy Constructor Executed!" << endl;
 
+    // Assign member variables from the original student object to the new object
     numCourses = student.numCourses;
     courseList = new string[numCourses];
 
@@ -21,6 +24,7 @@ Student::Student(const Student &student) {
         courseList[i] = student.courseList[i];
 }
 
+// Deconstructor to delete course list array from dynamic memory and assign a null pointer in its place
 Student::~Student() {
     cout << "Deconstructor Executed!" << endl;
     if (courseList != nullptr) {
@@ -29,10 +33,12 @@ Student::~Student() {
     }
 }
 
+// Set Name method to assign student object's name
 void Student::SetName(string &name) {
     studentName = name;
 }
 
+// Add Course method to add a new course to the course list array and resize the dynamic array if necessary
 void Student::AddCourse(string &course, int &size) {
     if (numCourses >= size) {
         size *= 2;
@@ -50,12 +56,15 @@ void Student::AddCourse(string &course, int &size) {
     numCourses++;
 }
 
+// Reset Course List method to set number of courses to zero,
+// delete all values in the current array and assign a new default array in its place
 void Student::ResetCourseList() {
     numCourses = 0;
     delete []courseList;
     courseList = new string[2];
 }
 
+// Output method to print all the member values of the student object
 void Student::PrintInformation() {
     cout << "Student: " << studentName << endl;
     cout << "Number of Courses = " << numCourses << endl;

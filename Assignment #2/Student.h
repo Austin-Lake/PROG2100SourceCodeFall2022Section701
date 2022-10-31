@@ -5,31 +5,26 @@
 #include <iostream>
 using namespace std;
 
+// Guard to make sure header file isn't defined twice in the same file
 #ifndef ASSIGNMENT__2_STUDENT_H
 #define ASSIGNMENT__2_STUDENT_H
 
 class Student {
-
+    // Private member variables for Student object
 private:
     string studentName;
     int numCourses = 0;
     string *courseList = new string[2];
 public:
+    // Default Constructor declaration
     Student();
+    // Copy Constructor declaration
     Student(const Student &student);
+    // Deconstructor declaration
     ~Student();
 
-//    Student &operator+ (Student &student) {
-//        cout << "Assignment Operator Fired!" << endl;
-//        int count = this->numCourses;
-//        student.courseList = new string[count];
-//
-//        for (int i = 0; i < count; i++) {
-//            student.courseList[i] = this->courseList[i];
-//        }
-//
-//        return student;
-//    }
+    // Overloaded Assignment Operator that overwrites and
+    // assigns a new course list with the length of the passed in Student object and copies its values over
     Student &operator=(const Student &student) {
         cout << "Assignment Operator Fired!" << endl;
         delete []this->courseList;
@@ -42,13 +37,10 @@ public:
         cout << "\n\n";
         return *this;
     }
-
+    // Class method declarations
     void SetName(string &name);
-
     void AddCourse(string &course, int &size);
-
     void ResetCourseList();
-
     void PrintInformation();
 };
 
