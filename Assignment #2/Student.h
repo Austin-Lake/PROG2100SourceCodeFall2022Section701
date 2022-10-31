@@ -9,6 +9,7 @@ using namespace std;
 #ifndef ASSIGNMENT__2_STUDENT_H
 #define ASSIGNMENT__2_STUDENT_H
 
+// Student Class and Declarations
 class Student {
     // Private member variables for Student object
 private:
@@ -16,11 +17,11 @@ private:
     int numCourses = 0;
     string *courseList = new string[2];
 public:
-    // Default Constructor declaration
+    // Default Constructor
     Student();
-    // Copy Constructor declaration
+    // Copy Constructor
     Student(const Student &student);
-    // Deconstructor declaration
+    // Deconstructor
     ~Student();
 
     // Overloaded Assignment Operator that overwrites and
@@ -34,7 +35,7 @@ public:
         for (int i = 0; i < student.numCourses; i++) {
             this->courseList[i] = student.courseList[i];
         }
-        cout << "\n\n";
+
         return *this;
     }
     // Class method declarations

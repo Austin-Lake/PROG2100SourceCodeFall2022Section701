@@ -14,7 +14,7 @@ Student::Student() {
 }
 // Copy Constructor to hard copy course list from one student object to another
 Student::Student(const Student &student) {
-    cout << "Copy Constructor Executed!" << endl;
+    cout << "Copy Constructor Fired!" << "\n" << endl;
 
     // Assign member variables from the original student object to the new object
     numCourses = student.numCourses;
@@ -26,7 +26,7 @@ Student::Student(const Student &student) {
 
 // Deconstructor to delete course list array from dynamic memory and assign a null pointer in its place
 Student::~Student() {
-    cout << "Deconstructor Executed!" << endl;
+    cout << "Deconstructor Fired!" << endl;
     if (courseList != nullptr) {
         delete []courseList;
         courseList = nullptr;
@@ -47,9 +47,7 @@ void Student::AddCourse(string &course, int &size) {
         for (int j = 0; j < numCourses; j++)
             temp[j] = courseList[j];
 
-
         delete []courseList;
-
         courseList = temp;
     }
     courseList[numCourses] = course;
@@ -69,6 +67,6 @@ void Student::PrintInformation() {
     cout << "Student: " << studentName << endl;
     cout << "Number of Courses = " << numCourses << endl;
     for (int j = 0; j < numCourses; j++) {
-        cout << "   Course " << "#" << j+1 << ": " << courseList[j] << endl;
+        cout << "   Course " << "#" << j+1 << ": " << courseList[j] << "\n" << endl;
     }
 }

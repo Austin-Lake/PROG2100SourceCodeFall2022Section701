@@ -1,3 +1,0 @@
-C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\Assignment__2.dir/objects.a
-C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\mingw\bin\ar.exe qc CMakeFiles\Assignment__2.dir/objects.a @CMakeFiles\Assignment__2.dir\objects1.rsp
-C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\mingw\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Assignment__2.dir/objects.a -Wl,--no-whole-archive -o Assignment__2.exe -Wl,--out-implib,libAssignment__2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Assignment__2.dir\linklibs.rsp
