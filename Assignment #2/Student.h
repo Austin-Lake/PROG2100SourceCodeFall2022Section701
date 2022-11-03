@@ -27,7 +27,8 @@ public:
     // Overloaded Assignment Operator that overwrites and
     // assigns a new course list with the length of the passed in Student object and copies its values over
     Student &operator=(const Student &student) {
-        cout << "Assignment Operator Fired!" << endl;
+        cout << "Assignment Operator Fired!" << "\n" << endl;
+
         delete []this->courseList;
         this->courseList = new string[student.numCourses];
         this->numCourses = student.numCourses;
@@ -38,6 +39,8 @@ public:
 
         return *this;
     }
+    // Friend declaration of Overloaded ostream operator to access private member variables
+    friend ostream &operator<<(ostream &os, const Student &student);
     // Class method declarations
     void SetName(string &name);
     void AddCourse(string &course, int &size);
@@ -45,6 +48,13 @@ public:
     void PrintInformation();
 };
 
+// Inline implementation of Overloaded ostream operator for output of course list
+inline ostream &operator<<(ostream &os, const Student &student) {
+    for (int j = 0; j < student.numCourses; j++) {
+        os << "   Course " << "#" << j+1 << ": " << student.courseList[j] << endl;
+    }
+    return os;
+}
 
 #endif //ASSIGNMENT__2_STUDENT_H
 

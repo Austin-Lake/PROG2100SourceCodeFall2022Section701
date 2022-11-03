@@ -26,7 +26,8 @@ Student::Student(const Student &student) {
 
 // Deconstructor to delete course list array from dynamic memory and assign a null pointer in its place
 Student::~Student() {
-    cout << "Deconstructor Fired!" << endl;
+    cout << "Deconstructor Fired! for Student: " << studentName << "\n" << endl;
+
     if (courseList != nullptr) {
         delete []courseList;
         courseList = nullptr;
@@ -55,7 +56,7 @@ void Student::AddCourse(string &course, int &size) {
 }
 
 // Reset Course List method to set number of courses to zero,
-// delete all values in the current array and assign a new default array in its place
+// delete all values in the current array and assign a new default sized array in its place
 void Student::ResetCourseList() {
     numCourses = 0;
     delete []courseList;
@@ -66,7 +67,7 @@ void Student::ResetCourseList() {
 void Student::PrintInformation() {
     cout << "Student: " << studentName << endl;
     cout << "Number of Courses = " << numCourses << endl;
-    for (int j = 0; j < numCourses; j++) {
-        cout << "   Course " << "#" << j+1 << ": " << courseList[j] << "\n" << endl;
-    }
+    cout << *this;
+
+    cout << "\n";
 }

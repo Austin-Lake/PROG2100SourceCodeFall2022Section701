@@ -1,3 +1,0 @@
-C:/Users/W0420180/CLionProjects/PROG2100SourceCodeFall2022Section701/Assignment #2/cmake-build-debug/CMakeFiles/Assignment__2.dir
-C:/Users/W0420180/CLionProjects/PROG2100SourceCodeFall2022Section701/Assignment #2/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/W0420180/CLionProjects/PROG2100SourceCodeFall2022Section701/Assignment #2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

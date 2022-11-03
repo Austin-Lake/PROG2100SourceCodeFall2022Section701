@@ -5,6 +5,7 @@ using namespace std;
 int main() {
     // Infinite Loop
     while(true) {
+        // Variables to store student's name and course list details
         string name;
         int courseSize = 2;
         bool anotherCourse = true;
@@ -12,26 +13,27 @@ int main() {
         // Student one object
         Student studentOne;
         // Get Student one name
-        cout << "Enter student name: " << endl;
+        cout << "Enter first student's name: " << endl;
         cin >> name;
 
         // Set Student one name
         studentOne.SetName(name);
 
-        // Loop to repeatedly add courses until user specifies otherwise
+        // Repeatedly add courses that user enters
         while (anotherCourse) {
+            // Course variables
             string course;
             string addCourse;
-
+            // Get Course name
             cout << "Enter course: " << endl;
             cin >> course;
 
             // Add course to Student one object
             studentOne.AddCourse(course, courseSize);
-
-            cout << "Add another course? y/n: " << endl;
+            // Ask if another course is to be entered
+            cout << "Add another course? y/N: " << endl;
             cin >> addCourse;
-
+            // Check whether to reiterate and add another course
             if (addCourse == "y")
                 anotherCourse = true;
             else
@@ -42,7 +44,7 @@ int main() {
         studentOne.PrintInformation();
 
         // Get Student two name
-        cout << "Enter Second Student's Name: " << endl;
+        cout << "Enter second student's name: " << endl;
         cin >> name;
 
         // Instantiate Student two object with copy constructor passing in Student one object
@@ -57,7 +59,7 @@ int main() {
         studentOne.PrintInformation();
 
         // Get Student three name
-        cout << "Enter Third Student's Name: " << endl;
+        cout << "Enter third student's name: " << endl;
         cin >> name;
         // Create Student three object with default constructor
         Student studentThree;
