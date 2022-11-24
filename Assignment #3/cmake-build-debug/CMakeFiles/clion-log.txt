@@ -1,0 +1,4 @@
+C:\Users\Austi\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4167.35\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/Austi/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/bin/ninja/win/ninja.exe -G Ninja -S "C:\Austin-Lake\PROG2100SourceCodeFall2022Section701\Assignment #3" -B "C:\Austin-Lake\PROG2100SourceCodeFall2022Section701\Assignment #3\cmake-build-debug"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Austin-Lake/PROG2100SourceCodeFall2022Section701/Assignment #3/cmake-build-debug
