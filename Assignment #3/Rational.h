@@ -8,41 +8,38 @@
 #include <string>
 using namespace std;
 
+// Function declarations
 bool ProcessInput(const string &input, int &numerator, int &denominator);
-
 void SimplifyFraction(int &numerator, int &denominator);
-
-int GreatestCommonFactor(const int &numerator, const int &denominator);
-
-int LowestCommonMultiple(const int &valueOne, const int &valueTwo);
-
 void ConvertRationalValues(int &numOne, int &denOne, int &numTwo, int &denTwo);
-
-int CountOccurences(const string &text, const char &character);
-
+int GreatestCommonFactor(const int &numerator, const int &denominator);
+int LowestCommonMultiple(const int &valueOne, const int &valueTwo);
+int Occurence(const string &text, const char &character);
 void ReverseSign(int &value);
-
 void Separator();
 
-
+// Struct to store the values of the overloaded mathematical operators
 struct Fraction {
     int numerator = 0;
     int denominator = 0;
 };
 
-
+// Rational Number class
 class RationalNumber {
 private:
     int numerator;
     int denominator;
 
 public:
+    // Default and overloaded constructor declarations
     RationalNumber();
     RationalNumber(const int &num);
     RationalNumber(const int &num, const int &den);
     RationalNumber(string &fraction);
-
+    // Deconstructor declaration
     ~RationalNumber();
+
+    // Overloaded equality operators
 
     bool operator==(const RationalNumber &rationalNumber) const {
         cout << "   Equal Operator Fired!" << endl;
@@ -86,6 +83,9 @@ public:
 
         return a > c;
     }
+
+    // Overloaded mathematical operators
+
     Fraction &operator/(const RationalNumber &rationalNumber) const {
         cout << "    Division Operator Fired!" << endl;
 
@@ -139,7 +139,6 @@ public:
 
         return fraction;
     }
-
     Fraction &operator-(const RationalNumber &rationalNumber) const {
         cout << "    Subtraction Operator Fired!" << endl;
 
@@ -160,12 +159,15 @@ public:
         return fraction;
     }
 
+    // Friend declarations of overloaded output operator
     friend string &operator<<(string &output, RationalNumber &rationalNumber);
     friend ostream &operator<<(ostream &os, const RationalNumber &rationalNumber);
     friend ostream &operator<<(ostream &os, const Fraction &fraction);
 };
-
+// Print function declared after class declaration inorder to pass in class objects as parameters
 void PrintOperations(RationalNumber &rationalNumberOne, RationalNumber &rationalNumberTwo);
+
+// Inline Implementations of overloaded output operator
 
 inline string &operator<<(string &output, RationalNumber &rationalNumber) {
     output += to_string(rationalNumber.numerator) + "/" + to_string(rationalNumber.denominator);
