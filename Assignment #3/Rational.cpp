@@ -245,10 +245,10 @@ int LowestCommonMultiple(const int &valueOne, const int &valueTwo) {
     if(valueTwo < 0)
         ReverseSign(valTwo);
 
-    // Cached positive values as counters to increment each value by
+    // Cached positive temp values as counters to increment each temp value by
     int valOneCounter = valOne, valTwoCounter = valTwo;
 
-    // Keeps adding the original value to the smaller
+    // Keeps adding counter to the smaller
     // temporary value until both temporary values are equal
     while(valOne != valTwo) {
         if(valOne < valTwo)
