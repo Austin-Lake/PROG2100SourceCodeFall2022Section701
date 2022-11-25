@@ -190,7 +190,7 @@ void SimplifyFraction(int &numerator, int &denominator) {
 void ConvertRationalValues(int &numOne, int &denOne, int &numTwo, int &denTwo) {
     // Gets the Lowest Common Multiple of both denominators
     int LCM = LowestCommonMultiple(denOne, denTwo);
-
+    cout <<  "LCM" << LCM << endl;
     // Early Return if Lowest Common Multiple equals zero
     if (LCM == 0)
         return;
@@ -198,6 +198,7 @@ void ConvertRationalValues(int &numOne, int &denOne, int &numTwo, int &denTwo) {
     // Creates a factor based on the Lowest Common Multiple divided by each denominator
     int FirstFactor = LCM / denOne, SecondFactor = LCM / denTwo;
 
+    cout << "First Factor" << FirstFactor << endl;
     // Multiplies each numerator and denominator value by their respective factor
     numOne *= FirstFactor, denOne *= FirstFactor;
     numTwo *= SecondFactor, denTwo *= SecondFactor;
@@ -245,13 +246,16 @@ int LowestCommonMultiple(const int &valueOne, const int &valueTwo) {
     if(valueTwo < 0)
         ReverseSign(valTwo);
 
+    // Cached positive values as counters to increment each value by
+    int valOneCounter = valOne, valTwoCounter = valTwo;
+
     // Keeps adding the original value to the smaller
     // temporary value until both temporary values are equal
     while(valOne != valTwo) {
         if(valOne < valTwo)
-            valOne += valueOne;
+            valOne += valOneCounter;
         else
-            valTwo += valueTwo;
+            valTwo += valTwoCounter;
     }
 
     // Returns the Lowest Common Multiple value
